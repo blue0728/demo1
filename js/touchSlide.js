@@ -3,15 +3,14 @@
  * @authors serge
  * @date    2015-06-18 10:29:57
  * @version 1.0
- * @demo 
+ * @parme {object}
+ * @demo
  * $('#slide').TouchSlide({
  *    btn: $('#btn')
  * });
  */
 ;
 (function($) {
-    //下标
-    var i = 0;
 
     //默认配置
     var settings = {
@@ -26,8 +25,9 @@
     function TouchSlide(elem, opts) {
         this.elem = elem;
         this.opts = opts;
+        this.index = 0;
         this.init();
-
+        
     }
 
     //异步加载图片
@@ -57,22 +57,22 @@
 
         //核心动画
         Slide: function() {
+
             var that = this,
                 $elem = that.elem,
                 flag = true,
                 timer = null,
                 rem = that.getRem();
-
             $elem.prepend($elem.children().clone().addClass('clone'));
 
             var $child = $elem.children(),
                 len = $child.length;
-
-            i = i + len / 2;
-
+                
+            var i = that.index + len / 2;
+            
             if (that.opts.btn) {
 
-                var $btn = $(btn);
+                var $btn = $(that.opts.btn);
 
                 for (var j = 0; j < len / 2; j++) {
                     $btn.append('<i></i>');
@@ -86,6 +86,7 @@
                     translate3d: '-' + (index * rem) + 'rem' + ',0,0'
                 }, 0);
                 $btn.children().eq(0).addClass('current');
+
                 loadImg($child, i);
             }
 
@@ -113,7 +114,8 @@
                         reset(i);
                     }
 
-                    $btn.children().eq(i - 6).addClass('current').siblings().removeClass('current');
+                    var $btn = $(that.opts.btn);
+                    $btn.children().eq(i - len / 2).addClass('current').siblings().removeClass('current');
 
                     flag = true;
 

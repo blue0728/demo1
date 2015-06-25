@@ -6,30 +6,17 @@
 <title>Examples</title>
 <meta name="description" content="">
 <meta name="keywords" content="">
-<link href="" rel="stylesheet">
+<link href="css/global.css" rel="stylesheet">
 <script src="js/flexible.js"></script>
 <script src="js/zepto.min.js"></script>
 <script src="js/touchSlide.js"></script>
-<script src="js/touchDialog.js"></script>
+<script src="js/common.js"></script>
 <style>
-*{margin: 0;padding: 0;font-family: sans-serif}
-li{list-style: none;}  
-body{width: 16rem;margin: 0 auto;}  
-.box{width: 100%;overflow: hidden;position: relative;}
-.box .btn{width: 100%;text-align: right;height: .5rem;position: absolute;left: 0;bottom: .3rem;}
-.box .btn i{width: .35rem;height: .35rem;border-radius: 100%;background: rgba(255,255,255,.7);display: inline-block;margin: 0 .15rem;}
-.box .btn i.current{background: #f70;}
-.box .btn i:last-child{margin-right: 1rem;}
-.box ul{width: 100%;height: 5rem;display: -webkit-box;text-align: center;}
-.box ul li{text-align: center;width: 100%;background: url(images/loading.gif) center no-repeat;}
-.box ul li img{width: 16rem;height: 5rem;}
-
-.loading{width: 3.2rem;height: 3.2rem;background: rgba(0,0,0,.7);position: relative;left: 50%;top: 50%;border-radius: .15rem;color: #fff;margin-left: -1.6rem;top:-1.6rem;font-size: 0.6rem;text-align: center;}
-.loading p{text-align: center;line-height: 1rem;}
-.loading img{height: 1rem;  margin-top: 0.5rem;}
+    a{padding: 20px ;display: inline-block;background: #ccc;border: 1px solid #ddd;margin: 20px;border-radius: 5px;}
 </style>
 </head>
 <body>
+    
     <div class="box">
         <ul id="slide">
             <li><img src="images/kong.gif" data-src="images/1.jpg" alt=""></li>
@@ -42,24 +29,81 @@ body{width: 16rem;margin: 0 auto;}
         <div class="btn" id="btn"></div>
     </div>
 
-    <div id="aa"></div>   
+    <div class="box">
+        <ul id="slide3">
+            <li class="bb"><img src="images/kong.gif" data-src="images/1.jpg" alt=""></li>
+            <li><img src="images/kong.gif" data-src="images/2.jpg" alt=""></li>
+            <li><img src="images/kong.gif" data-src="images/3.jpg" alt=""></li>
+            <li><img src="images/kong.gif" data-src="images/4.jpg" alt=""></li>
+            <li><img src="images/kong.gif" data-src="images/5.jpg" alt=""></li>
+            <li><img src="images/kong.gif" data-src="images/6.jpg" alt=""></li>
+        </ul>
+        <div class="btn" id="btn3"></div>
+    </div>
+
+
+    <p><a href="javascript:;" id="ac" data-url="index.html">点我loading页面</a></p>
+
+    <p><a href="javascript:;" id="msg">点我msg</a></p>
+    <p><a href="javascript:;" id="dg1">点我对话框1</a></p>
+    <p><a href="javascript:;" id="dg2">点我对话框2</a></p>
+    <p><a href="javascript:;" id="dg3">点我自定义</a></p>
+    <div style="height:3000px;"></div>
 <script>
-;(function() {
-    var div = document.createElement('div'),
-        p = document.createElement('p'),
-        img = document.createElement('img'),
-        txt = document.createTextNode('正在加载');
-        div.setAttribute('class','loading');
-        img.src = 'images/loading-page.gif';
-        p.appendChild(txt);
-        div.appendChild(img);
-        div.appendChild(p);
-    document.body.appendChild(div);    
-})();
+
 $(function(){
+
     $('#slide').TouchSlide({
         btn: $('#btn')
     });
+
+    $('#slide3').TouchSlide({
+        btn: $('#btn3')
+    });
+
+    $('#msg').on('tap',function(){
+
+        hm.dialog.msg('帐号或密码错误!')
+    })
+
+    $('#dg1').on('tap',function(){
+
+        hm.dialog.show({
+            text: '我是确认框1'
+        })
+    })
+
+    $('#dg2').on('tap',function(){
+
+        hm.dialog.show({
+            text: '我是对话框2',
+            okFn: function(){
+                hm.dialog.msg('todo Ajax操作')
+            }
+        })
+    });
+
+    $('#dg3').on('tap',function(){
+         hm.dialog.show({
+            html: '<div class="box" style="width:16rem;">' +
+                   ' <ul id="slide2">' + 
+                       ' <li class="bb"><img src="images/kong.gif" data-src="images/1.jpg" alt=""></li>' +
+                       ' <li><img src="images/kong.gif" data-src="images/2.jpg" alt=""></li>'+
+                        '<li><img src="images/kong.gif" data-src="images/3.jpg" alt=""></li>'+
+                        '<li><img src="images/kong.gif" data-src="images/4.jpg" alt=""></li>'+
+                       ' <li><img src="images/kong.gif" data-src="images/5.jpg" alt=""></li>'+
+                        '<li><img src="images/kong.gif" data-src="images/6.jpg" alt=""></li>'+
+                    '</ul>'+
+                    '<div class="btn" id="btn2"></div>'+
+                '</div>',
+            onshow: function(){
+                 $('#slide2').TouchSlide({
+                    btn: $('#btn2')
+                });
+            }    
+         })
+    })
+
 })    
 </script>    
 </body>
